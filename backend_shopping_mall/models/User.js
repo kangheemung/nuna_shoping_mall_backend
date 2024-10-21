@@ -17,6 +17,5 @@ userSchema.methods.toJSON = function () {
     delete obj.updateAt;
     return obj;
 };
-const User = mongoose.model('User.suerSchema');
+const User = mongoose.model('User', userSchema);
 module.exports = User;
-

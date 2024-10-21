@@ -5,19 +5,23 @@ const userController = {};
 userController.createUser = async (req, res) => {
     try {
         let { name, email, password, level } = req.body;
-        //
+
         const user = await User.findOne({ email });
         if (user) {
-            throw new Error('User already exist');
+            throw new Error('User already exists');
         }
-        const salt = await bcrypt.genSaltSync(10);
-        password = await bcrypt.hash(password.salt);
-        const newUser = new User({ name, email, password, level: level ? level : 'customer' });
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const newUser = new User({ name, email, password: hashedPassword, level: level || 'customer' }); // Updated line to use default value for level
+
         await newUser.save();
+
         return res.status(200).json({ status: 'success' });
-        user.save;
     } catch (err) {
-        res.status(400).json({ status: 'fail', error: error.message });
+        return res.status(400).json({ status: 'fail', error: err.message });
     }
 };
+
 module.exports = userController;
