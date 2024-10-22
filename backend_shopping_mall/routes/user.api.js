@@ -1,9 +1,12 @@
 //user api
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/userController');
+// Update the import statement to correctly match the UserController.js file
+const userController = require('../controllers/user.controller');
+
 //회원가입
-// router.post('/login');
+
 router.post('/', userController.createUser);
+ router.post('/login', userController.loginUser);
 
 module.exports = router;
