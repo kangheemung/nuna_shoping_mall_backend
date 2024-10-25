@@ -5,11 +5,11 @@ const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const Schema = mongoose.Schema;
 const userSchema = Schema(
     {
-        email: { type: String, required: true, unique: true },
+        email: { type: String, required: true, unique: true, lowercase: true, trim: true },
         password: { type: String, required: true },
         name: { type: String, required: true },
         //권한 관리
-        level: { type: String, default: 'customer' }, //2typs: customer, admin
+        level: { type: String, default: 'customer', enum: ['customer', 'admin'], required: true }, //2typs: customer, admin
     },
     { timestamps: true }
 );
